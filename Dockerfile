@@ -1,8 +1,10 @@
 FROM node:10.9
 
 RUN npm install request
+ADD https://raw.githubusercontent.com/eficode/wait-for/master/wait-for /bin/wait-for
+RUN chmod a+rx /bin/wait-for
 
 WORKDIR /home/node/app
 COPY app.js /home/node/app
 
-CMD ["node", "./app.js"]
+CMD [ "/bin/wait-for", "ip:80", "--", "node", "./app.js"]
